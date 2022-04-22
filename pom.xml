@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0.1-SNAPSHOT</version>
     <modules>
-        <module>filter</module>
+        <module>limiter-spring-boot-starter</module>
     </modules>
 
     <properties>

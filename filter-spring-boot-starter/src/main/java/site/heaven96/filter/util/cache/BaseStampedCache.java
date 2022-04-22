@@ -14,6 +14,7 @@ import java.util.concurrent.locks.StampedLock;
 public abstract class BaseStampedCache<K, V> {
 
     private static final long serialVersionUID = 1L;
+
     /**
      * 写的时候每个key一把锁，降低锁的粒度
      */
