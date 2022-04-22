@@ -1,29 +1,28 @@
-package site.heaven96.filter;
+package site.heaven96.filter.mapper;
 
-import cn.hutool.cache.CacheUtil;
-import cn.hutool.cache.impl.TimedCache;
 import site.heaven96.filter.exception.DuplicateRequestException;
+import site.heaven96.filter.util.cache.TimedCacheBase;
 
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.StampedLock;
 
 /**
  * 本地请求ID缓存
  *
- * @author lgw3488
+ * @author heaven96
  * @date 2022/04/21
  */
-public class LocalReqIdCache implements ReqIdCache {
+public abstract class BaseMapper implements RequestIdMapper {
 
     /**
      * 定时缓存 最长 1h
      */
-    private static TimedCache<String, String> reqIdCache = CacheUtil.newTimedCache(MAX_TTL);
+    private static TimedCacheBase<String, String> reqIdCache = new TimedCacheBase<>(MAX_TTL);
 
     /**
      * 冲压锁
+     * @deprecated 直接下沉加锁到TimeCache操作类
      */
-    private static StampedLock stampedLock = new StampedLock();
+    // private static StampedLock stampedLock = new StampedLock();
 
     static {
         reqIdCache.schedulePrune(1000);
@@ -40,6 +39,7 @@ public class LocalReqIdCache implements ReqIdCache {
 
     public static void put(String requestId, String value, long timeout, TimeUnit timeUnit) {
         long time = TimeUnit.MILLISECONDS.convert(timeout, timeUnit);
+        //with stampedLock...
         reqIdCache.put(requestId, value, time);
     }
 
@@ -66,11 +66,9 @@ public class LocalReqIdCache implements ReqIdCache {
         long l = 0L;
         if (reqIdCache.containsKey(requestId)) {
             try {
-                l = stampedLock.tryWriteLock();
                 reqIdCache.remove(requestId);
                 put(requestId, newVal, timeout, timeUnit);
             } finally {
-                stampedLock.unlockWrite(l);
             }
         } else {
             put(requestId, newVal, timeout, timeUnit);
@@ -91,6 +89,7 @@ public class LocalReqIdCache implements ReqIdCache {
     /**
      * 检查
      * 存在则延期到初始时间并报错
+     *
      * @param requestId 请求ID
      */
     public static void check(String requestId) {
@@ -104,6 +103,29 @@ public class LocalReqIdCache implements ReqIdCache {
         if (F.equals(s)) {
             throw new DuplicateRequestException(请求重复_该请求已处理完毕);
         }
+    }
+
+    /**
+     * 检查是否缺席
+     *
+     * @param requestId 请求ID
+     */
+    public static void checkAndPutP(String requestId, long timeout, TimeUnit timeUnit) {
+        String s = reqIdCache.get(requestId);
+        if (null == s) {
+            putP(requestId, timeout, timeUnit);
+            return;
+        }
+        if (P.equals(s)) {
+            throw new DuplicateRequestException(请求重复_该请求正在处理);
+        }
+        if (F.equals(s)) {
+            throw new DuplicateRequestException(请求重复_该请求已处理完毕);
+        }
+    }
+
+    public static Object get(String key) {
+        return reqIdCache.get(key);
     }
 
 }

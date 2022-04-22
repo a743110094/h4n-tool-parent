@@ -10,7 +10,7 @@ import site.heaven96.filter.starter.configuration.DupReqFilterAutoConfiguration;
 /**
  * 重复请求配置选择器
  *
- * @author lgw3488
+ * @author heaven96
  * @date 2022/04/21
  */
 public class DupReqConfigureSelector extends AdviceModeImportSelector<EnableDuplicateRequestFilter> {
@@ -23,13 +23,13 @@ public class DupReqConfigureSelector extends AdviceModeImportSelector<EnableDupl
     @Override
     @Nullable
     public String[] selectImports(AdviceMode adviceMode) {
-        switch(adviceMode) {
-        case PROXY:
-            return new String[]{DupReqFilterAutoConfiguration.class.getName()};
-        case ASPECTJ:
-            return new String[]{ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME};
-        default:
-            return null;
+        switch (adviceMode) {
+            case PROXY:
+                return new String[]{DupReqFilterAutoConfiguration.class.getName()};
+            case ASPECTJ:
+                return new String[]{ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME};
+            default:
+                return null;
         }
     }
 }

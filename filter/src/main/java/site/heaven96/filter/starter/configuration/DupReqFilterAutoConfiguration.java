@@ -1,8 +1,6 @@
 package site.heaven96.filter.starter.configuration;
 
 
-
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
@@ -15,6 +13,12 @@ import site.heaven96.filter.aspect.DupReqFilterAspect;
 import java.util.logging.Logger;
 
 
+/**
+ * 重复请求过滤器自动配置
+ *
+ * @author heaven96
+ * @date 2022/04/22
+ */
 @Configuration
 public class DupReqFilterAutoConfiguration implements ImportAware {
 

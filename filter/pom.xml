@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>parent</artifactId>
         <groupId>site.heaven96</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>filter</artifactId>
+
+    <artifactId>filter-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
     <modelVersion>4.0.0</modelVersion>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-cache</artifactId>
-            <version>5.8.0.M1</version>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>

@@ -13,7 +13,7 @@ import static site.heaven96.filter.enums.CacheStrategy.LOCAL;
 /**
  * 启用重复请求筛选
  *
- * @author lgw3488
+ * @author heaven96
  * @date 2022/04/21
  */
 @Target({ElementType.TYPE})

@@ -1,6 +1,13 @@
-package site.heaven96.filter;
+package site.heaven96.filter.mapper;
 
-public interface ReqIdCache {
+/**
+ * 请求ID映射器
+ *
+ * @author heaven96
+ * @date 2022/04/21
+ */
+public interface RequestIdMapper {
+
     /**
      * 最大TTL MS
      */

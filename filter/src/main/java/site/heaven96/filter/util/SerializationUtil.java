@@ -1,13 +1,26 @@
 package site.heaven96.filter.util;
 
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-import java.io.*;
-
+/**
+ * 序列化工具
+ *
+ * @author heaven96
+ * @date 2022/04/21
+ */
 public class SerializationUtil {
-    public static byte[] serialize(Object state) {
-        ObjectOutputStream oos = null;
-        byte abyte[];
+    public static byte[] serialize(Serializable state) {
+        //fixed issue 01 NPE @ 2022-4-22 20:15
+        if (null == state) {
+            return new byte[0];
+        }
+        //
+        ObjectOutputStream oos;
+        byte[] abyte;
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream(bos);
@@ -17,11 +30,12 @@ public class SerializationUtil {
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
-        if (oos != null)
+        if (oos != null) {
             try {
                 oos.close();
             } catch (IOException ioexception) {
             }
+        }
         return abyte;
     }
 }

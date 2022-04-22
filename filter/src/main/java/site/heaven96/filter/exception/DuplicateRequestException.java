@@ -1,7 +1,13 @@
 package site.heaven96.filter.exception;
 
-public class DuplicateRequestException extends RuntimeException{
-    public DuplicateRequestException(){
+/**
+ * 重复请求异常
+ *
+ * @author heaven96
+ * @date 2022/04/22
+ */
+public class DuplicateRequestException extends RuntimeException {
+    public DuplicateRequestException() {
         super();
     }
 
