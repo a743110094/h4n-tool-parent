@@ -15,7 +15,7 @@ import site.heaven96.filter.starter.configuration.DupReqFilterAutoConfiguration;
  */
 public class DupReqConfigureSelector extends AdviceModeImportSelector<EnableDuplicateRequestFilter> {
 
-    private static final String ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME = "site.heaven96.filter.starter.configuration.DupReqFilterAutoConfiguration";
+    private static final String ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME = "site.heaven96.filter.site.heaven96.limiter.starter.configuration.DupReqFilterAutoConfiguration";
 
     public DupReqConfigureSelector() {
     }

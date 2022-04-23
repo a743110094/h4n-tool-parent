@@ -10,6 +10,7 @@
     <version>1.0.1-SNAPSHOT</version>
     <modules>
         <module>limiter-spring-boot-starter</module>
+        <module>filter-spring-boot-starter</module>
     </modules>
 
     <properties>
