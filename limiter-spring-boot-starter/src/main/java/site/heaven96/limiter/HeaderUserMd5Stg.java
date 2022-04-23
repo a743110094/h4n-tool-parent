@@ -74,6 +74,7 @@ public class HeaderUserMd5Stg implements UserMd5CalculateStrategy {
     @Override
     public String calculate(HttpServletRequest request) {
         //TODO Functional
+        assert null != request;
         String token = request.getHeader(this.keyName);
         BizAssertUtil.isTrue(null != request && StringUtils.hasText(token), TOKEN_NOT_FOUND_ERR_MSG);
         return token;

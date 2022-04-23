@@ -4,7 +4,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
@@ -42,10 +41,6 @@ public class DupReqFilterAspect {
      */
     private static final String MD5_FORMAT = "%s_%s_%s";
     /**
-     * site.heaven96.limiter.annotation
-     */
-    private static DuplicateRequestFilter ft;
-    /**
      * 请求ID
      */
     private static String reqId;
@@ -54,17 +49,17 @@ public class DupReqFilterAspect {
     private HttpServletRequest request;
 
 
-    @Pointcut("@annotation(site.heaven96.filter.annotation.DuplicateRequestFilter)")
+/*    @Pointcut("@annotation(site.heaven96.filter.annotation.DuplicateRequestFilter)")
     public void duplicateRequestFilter() {
-    }
+    }*/
 
-    @Around("duplicateRequestFilter()")
-    public Object saveLog(ProceedingJoinPoint point) throws Throwable {
+    @Around("@annotation(ft)")
+    public Object saveLog(ProceedingJoinPoint point, DuplicateRequestFilter ft) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         ft = method.getAnnotation(DuplicateRequestFilter.class);
         ///gene id
-        reqId = generateReqId();
+        reqId = generateReqId(ft.scope());
         //检查
         BaseMapper.checkAndPutP(reqId, ft.ttl(), ft.timeUnit());
         return point.proceed();
@@ -72,8 +67,8 @@ public class DupReqFilterAspect {
 
     //----------------------Private Method
 
-    @After("duplicateRequestFilter()")
-    public void after() {
+    @After("@annotation(ft)")
+    public void after(DuplicateRequestFilter ft) {
         BaseMapper.updateF(reqId, ft.ttl(), ft.timeUnit());
     }
 
@@ -83,9 +78,8 @@ public class DupReqFilterAspect {
      * @return {@code String}
      * @author heaven96
      */
-    private String generateReqId() throws NoSuchAlgorithmException {
+    private String generateReqId(Scope scope) throws NoSuchAlgorithmException {
         Map<String, String[]> parameterMap = request.getParameterMap();
-        Scope scope = ft.scope();
         String urlMd5 = MD5Utils.md5Hex(request.getRequestURI().getBytes(StandardCharsets.UTF_8));
         String paramsMd5 = EMPTY_STR;
         String reqBodyMd5 = EMPTY_STR;
