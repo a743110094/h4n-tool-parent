@@ -1,4 +1,4 @@
-package site.heaven96.limiter.util;
+package site.heaven96.core.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

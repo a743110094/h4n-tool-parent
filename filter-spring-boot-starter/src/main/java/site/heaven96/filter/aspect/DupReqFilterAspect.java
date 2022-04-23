@@ -9,16 +9,15 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import site.heaven96.core.util.HttpUtil;
+import site.heaven96.core.util.MD5Utils;
+import site.heaven96.core.util.MapUtil;
+import site.heaven96.core.util.SerializationUtil;
 import site.heaven96.filter.annotation.DuplicateRequestFilter;
 import site.heaven96.filter.enums.Scope;
 import site.heaven96.filter.mapper.BaseMapper;
-import site.heaven96.filter.util.MD5Utils;
-import site.heaven96.filter.util.MapUtil;
-import site.heaven96.filter.util.SerializationUtil;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
@@ -54,34 +53,6 @@ public class DupReqFilterAspect {
     @Autowired
     private HttpServletRequest request;
 
-    /**
-     * read request body as byte array
-     *
-     * @param request 请求
-     * @return {@code byte[]}
-     */
-    private static byte[] readAsBytes(HttpServletRequest request) {
-        int len = request.getContentLength();
-        byte[] buffer = new byte[len];
-        ServletInputStream in = null;
-
-        try {
-            in = request.getInputStream();
-            in.read(buffer, 0, len);
-            in.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (null != in) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return buffer;
-    }
 
     @Pointcut("@annotation(site.heaven96.filter.annotation.DuplicateRequestFilter)")
     public void duplicateRequestFilter() {
@@ -122,7 +93,7 @@ public class DupReqFilterAspect {
             paramsMd5 = MD5Utils.md5Hex(SerializationUtil.serialize(MapUtil.sort(parameterMap)));
         }
         if (scope.equals(Scope.BOTH) || scope.equals(Scope.REQUEST_BODY)) {
-            byte[] bytes = readAsBytes(request);
+            byte[] bytes = HttpUtil.readBodyAsBytes(request);
             if (bytes.length > 0) {
                 reqBodyMd5 = MD5Utils.md5Hex(bytes);
             }

@@ -1,4 +1,4 @@
-package site.heaven96.filter.util;
+package site.heaven96.core.util;
 
 
 import java.io.ByteArrayOutputStream;
@@ -20,13 +20,13 @@ public class SerializationUtil {
         }
         //
         ObjectOutputStream oos;
-        byte[] abyte;
+        byte[] b;
         try {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream(bos);
             oos.writeObject(state);
             oos.flush();
-            abyte = bos.toByteArray();
+            b = bos.toByteArray();
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
@@ -36,6 +36,6 @@ public class SerializationUtil {
             } catch (IOException ioexception) {
             }
         }
-        return abyte;
+        return b;
     }
 }

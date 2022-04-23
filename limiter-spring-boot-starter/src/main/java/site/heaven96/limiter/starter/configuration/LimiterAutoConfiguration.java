@@ -2,7 +2,7 @@ package site.heaven96.limiter.starter.configuration;
 
 
 import site.heaven96.limiter.annotation.EnableLimiter;
-import site.heaven96.limiter.aspect.LimiterAspect;
+import site.heaven96.limiter.common.aspect.LimiterAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
@@ -32,7 +32,7 @@ public class LimiterAutoConfiguration implements ImportAware {
 
     @Bean
     @Role(0)
-    public LimiterAspect dupReqFilterAspect() {
+    public LimiterAspect limiterAspect() {
         return new LimiterAspect();
     }
 

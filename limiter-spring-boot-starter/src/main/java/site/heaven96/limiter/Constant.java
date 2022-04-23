@@ -2,14 +2,10 @@ package site.heaven96.limiter;
 
 import cn.hutool.cache.impl.TimedCache;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.StampedLock;
+
 public class Constant {
-
-    /**
-     * 调用日志缓存
-     */
-    private static TimedCache<String, MethodCalled> callLogCache = new TimedCache<>(3600 * 1000);
-
-
 
 
 
