@@ -1,7 +1,7 @@
 package site.heaven96.limiter;
 
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
+import site.heaven96.limiter.util.BizAssertUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.function.Function;
@@ -75,7 +75,7 @@ public class HeaderUserMd5Stg implements UserMd5CalculateStrategy {
     public String calculate(HttpServletRequest request) {
         //TODO Functional
         String token = request.getHeader(this.keyName);
-        Assert.isTrue(null != request && StringUtils.hasText(token), TOKEN_NOT_FOUND_ERR_MSG);
+        BizAssertUtil.isTrue(null != request && StringUtils.hasText(token), TOKEN_NOT_FOUND_ERR_MSG);
         return token;
     }
 }

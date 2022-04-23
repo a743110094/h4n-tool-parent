@@ -47,7 +47,7 @@ public class KeyUtil {
             assert null != signature;
             String methodNameMd5 = MethodSignatureUtil.getMethodNameMd5(signature);
             //判断是否需要依据用户限流 若需要就拿到user token
-            String userMd5 = lr.byUser().equals(IdentifierType.NONE) ? "" : getUserMd5(lr, request);
+            String userMd5 = lr.independence().equals(IdentifierType.NONE) ? "" : getUserMd5(lr, request);
             //拼接key
             String combineMd5 = String.format(FORMAT_STR, methodNameMd5, userMd5);
             //生成最终的key  方法的md5_用户token的md5
@@ -76,11 +76,11 @@ public class KeyUtil {
     }
 
     private static String getUserMd5(Limiter lr, HttpServletRequest request) throws NoSuchAlgorithmException {
-        IdentifierType identifierType = lr.byUser();
+        IdentifierType identifierType = lr.independence();
         UserMd5CalculateStrategy ms = null;
         switch (identifierType) {
             case HEADER: {
-                ms = new HeaderUserMd5Stg(lr.headerKey(), null);
+                ms = new HeaderUserMd5Stg(lr.key(), null);
                 break;
             }
             case PARAMETER: {

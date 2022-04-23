@@ -59,7 +59,7 @@ public class DupReqFilterAspect {
     }
 
     @Around("duplicateRequestFilter()")
-    public void saveLog(ProceedingJoinPoint point) throws Throwable {
+    public Object saveLog(ProceedingJoinPoint point) throws Throwable {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         ft = method.getAnnotation(DuplicateRequestFilter.class);
@@ -67,7 +67,7 @@ public class DupReqFilterAspect {
         reqId = generateReqId();
         //检查
         BaseMapper.checkAndPutP(reqId, ft.ttl(), ft.timeUnit());
-        point.proceed();
+        return point.proceed();
     }
 
     //----------------------Private Method

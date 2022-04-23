@@ -12,6 +12,7 @@
         <module>limiter-spring-boot-starter</module>
         <module>filter-spring-boot-starter</module>
         <module>core</module>
+        <module>test</module>
     </modules>
 
     <properties>

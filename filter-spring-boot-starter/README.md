@@ -67,6 +67,3 @@
         return new Result(false,HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage());
   }
 ```
-
-### 新需求
-- Mutex
