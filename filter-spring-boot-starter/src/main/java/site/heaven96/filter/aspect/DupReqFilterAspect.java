@@ -49,7 +49,7 @@ public class DupReqFilterAspect {
     private HttpServletRequest request;
 
 
-/*    @Pointcut("@annotation(site.heaven96.filter.annotation.DuplicateRequestFilter)")
+/*    @Pointcut("@site.heaven96.log.annotation(site.heaven96.filter.site.heaven96.log.annotation.DuplicateRequestFilter)")
     public void duplicateRequestFilter() {
     }*/
 

@@ -63,7 +63,7 @@
   private static final String DUPLICATE_REQUEST_ERR_MSG="重复请求错误：{}";
   @ExceptionHandler(DuplicateRequestException.class)
   public Result sqlExpHandler(DuplicateRequestException e){
-        log.error(DUPLICATE_REQUEST_ERR_MSG,e.getMessage());
+        logs.error(DUPLICATE_REQUEST_ERR_MSG,e.getMessage());
         return new Result(false,HttpStatus.INTERNAL_SERVER_ERROR.value(),e.getMessage());
   }
 ```

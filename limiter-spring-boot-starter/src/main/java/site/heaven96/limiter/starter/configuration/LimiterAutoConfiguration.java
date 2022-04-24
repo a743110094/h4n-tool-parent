@@ -1,14 +1,14 @@
 package site.heaven96.limiter.starter.configuration;
 
 
-import site.heaven96.limiter.annotation.EnableLimiter;
-import site.heaven96.limiter.common.aspect.LimiterAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
+import site.heaven96.limiter.annotation.EnableLimiter;
+import site.heaven96.limiter.common.aspect.LimiterAspect;
 
 import java.util.logging.Logger;
 
@@ -37,7 +37,7 @@ public class LimiterAutoConfiguration implements ImportAware {
     }
 
     /**
-     * Set the annotation metadata of the importing @{@code Configuration} class.
+     * Set the site.heaven96.log.annotation metadata of the importing @{@code Configuration} class.
      *
      * @param importMetadata
      */

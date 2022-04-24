@@ -26,7 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 @Order(0)
 public class LimiterAspect {
     /**
-     * site.heaven96.limiter.annotation
+     * site.heaven96.limiter.site.heaven96.log.annotation
      */
     // private static Limiter lr;
 
@@ -37,9 +37,9 @@ public class LimiterAspect {
     /**
      * 方法调用速度限幅器
      *
-     * @Around(value = "@annotation(around)") //around 与 下面参数名around对应
+     * @Around(value = "@site.heaven96.log.annotation(around)") //around 与 下面参数名around对应
      */
-   /* @Pointcut("@annotation(site.heaven96.limiter.annotation.Limiter)")
+   /* @Pointcut("@site.heaven96.log.annotation(site.heaven96.limiter.site.heaven96.log.annotation.Limiter)")
     public void methodCallRateLimiter() {
     }*/
     @Around("@annotation(lr)")

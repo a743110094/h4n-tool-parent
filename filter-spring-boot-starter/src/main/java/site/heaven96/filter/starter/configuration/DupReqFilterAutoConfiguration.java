@@ -37,7 +37,7 @@ public class DupReqFilterAutoConfiguration implements ImportAware {
     }
 
     /**
-     * Set the site.heaven96.filter.site.heaven96.limiter.annotation metadata of the importing @{@code Configuration} class.
+     * Set the site.heaven96.filter.site.heaven96.limiter.site.heaven96.log.annotation metadata of the importing @{@code Configuration} class.
      *
      * @param importMetadata
      */
