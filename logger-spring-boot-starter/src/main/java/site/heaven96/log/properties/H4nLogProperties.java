@@ -5,19 +5,24 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import site.heaven96.log.constant.LogInfo;
 
 @ConfigurationProperties(prefix = LogInfo.PREFIX)
-public class CustomLogProperties {
+public class H4nLogProperties {
 
+    /**
+     * 启用
+     */
     private Boolean enable;
 
-    private String defaultHandle;
+    /**
+     * 默认处理
+     */
+    private String defaultLogHandler;
 
-
-    public String getDefaultHandle() {
-        return defaultHandle;
+    public String getDefaultLogHandler() {
+        return defaultLogHandler;
     }
 
-    public void setDefaultHandle(String defaultHandle) {
-        this.defaultHandle = defaultHandle;
+    public void setDefaultLogHandler(String defaultLogHandler) {
+        this.defaultLogHandler = defaultLogHandler;
     }
 
     public Boolean getEnable() {

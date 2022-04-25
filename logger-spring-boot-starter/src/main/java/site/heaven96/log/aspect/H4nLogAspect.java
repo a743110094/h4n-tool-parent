@@ -6,8 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.sun.org.slf4j.internal.Logger;
-import com.sun.org.slf4j.internal.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,21 +18,19 @@ import org.springframework.core.annotation.Order;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.expression.spel.support.StandardEvaluationContext;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import site.heaven96.log.annotation.Logs;
 import site.heaven96.log.handle.LogHandle;
 import site.heaven96.log.parser.LogParser;
-import site.heaven96.log.properties.CustomLogProperties;
+import site.heaven96.log.properties.H4nLogProperties;
 
 import java.util.List;
 
-@Component
 @Aspect
 @Order(0)
-public class CustomLogAspect {
+@Slf4j
+public class H4nLogAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomLogAspect.class);
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -56,7 +53,7 @@ public class CustomLogAspect {
     private List<LogParser> logParsers;
 
     @Autowired
-    private CustomLogProperties customLogProperties;
+    private H4nLogProperties customLogProperties;
     /**
      * 配置切入点
      * 为了通用性这里没有采用args()处理,如果是不考虑通用性的话，建议使用args进行切面，这样可以避免使用反射操作，直接拿到方法中参数的值
@@ -74,29 +71,28 @@ public class CustomLogAspect {
 
     @Around("logPointcut(logs)")
     public Object logAround(ProceedingJoinPoint joinPoint, Logs logs) throws Throwable {
+        log.debug("testLog");
         StandardEvaluationContext context = new StandardEvaluationContext();
         context.setBeanResolver(new BeanFactoryResolver(factory));
         ExpressionParser parser = new SpelExpressionParser();
 
-        String handle = StringUtils.hasText(logs.handle()) ? logs.handle() : customLogProperties.getDefaultHandle();
+        String handle = StringUtils.hasText(logs.handle()) ? logs.handle() : customLogProperties.getDefaultLogHandler();
 
         if (!StringUtils.hasText(handle)) {
-            logger.error("could not found site.heaven96.log.handle");
+            log.error("could not found site.heaven96.log.handle");
         } else {
             LogHandle logHandle = (LogHandle) parser.parseExpression(handle).getValue(context);
-
             String value = null;
             for (LogParser logParser : logParsers) {
                 if (logParser.condition(logs.type())) {
                     try {
                         value = logParser.parse(joinPoint);
                     } catch (Exception e) {
-                        logger.error("failed by logParser", e.getCause());
+                        log.error("Something wrong during log parsing : \n {}", e.getCause());
                     }
                 }
             }
-
-            logHandle.worker(value);
+            logHandle.handle(value);
         }
         return joinPoint.proceed();
     }

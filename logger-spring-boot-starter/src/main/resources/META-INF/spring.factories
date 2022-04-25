@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=site.heaven96.log.properties.CustomLogProperties
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=site.heaven96.log.H4nLogConfiguration

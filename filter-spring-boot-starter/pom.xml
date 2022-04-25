@@ -8,7 +8,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>filter-spring-boot-site.heaven96.limiter.starter</artifactId>
+    <artifactId>filter-spring-boot-starter</artifactId>
     <packaging>jar</packaging>
     <modelVersion>4.0.0</modelVersion>
 
