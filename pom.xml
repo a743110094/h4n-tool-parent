@@ -13,6 +13,7 @@
         <module>core</module>
         <module>test</module>
         <module>logger-spring-boot-starter</module>
+        <module>filter</module>
     </modules>
 
     <properties>
