@@ -11,7 +11,7 @@ public class DefaultLogHandle extends LogHandle {
     private static final Logger log = LoggerFactory.getLogger(DefaultLogHandle.class);
 
     @Override
-    public void worker(String value) {
+    public void handle(String value) {
         log.info("日志:" + value);
     }
 }
